@@ -45,10 +45,22 @@
     });
   }
 
+  function syncBrowserColorScheme(theme) {
+    let meta = document.querySelector('meta[name="color-scheme"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'color-scheme';
+      document.head?.appendChild(meta);
+    }
+    if (meta) meta.content = theme;
+    root.style.colorScheme = theme === 'light' ? 'only light' : 'dark';
+    root.style.backgroundColor = theme === 'light' ? '#ffffff' : '#111310';
+  }
+
   function apply(theme, persist = false) {
     if (!VALID.has(theme)) return;
     root.dataset.theme = theme;
-    root.style.colorScheme = theme;
+    syncBrowserColorScheme(theme);
     if (persist) {
       try { localStorage.setItem(KEY, theme); } catch {}
     }

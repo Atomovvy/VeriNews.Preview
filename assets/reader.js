@@ -5,6 +5,30 @@
   const UNREVIEWED_KEY = 'verinews-unreviewed';
   const ACK_KEY = 'verinews-unreviewed-ack';
   const MAX_AGE = 18;
+  const DESCRIPTOR_LABELS = {
+    pl: {
+      VIOLENCE: 'przemoc',
+      GRAPHIC_VIOLENCE_DESCRIPTION: 'graficzny opis przemocy',
+      DEATH: 'śmierć',
+      WAR_OR_ARMED_CONFLICT: 'wojna / konflikt zbrojny',
+      SEXUAL_CONTENT: 'treści seksualne',
+      STRONG_LANGUAGE: 'mocny język',
+      DRUGS: 'narkotyki',
+      SELF_HARM: 'samookaleczenie',
+      DISTURBING_CONTENT: 'treści niepokojące',
+    },
+    en: {
+      VIOLENCE: 'violence',
+      GRAPHIC_VIOLENCE_DESCRIPTION: 'graphic description of violence',
+      DEATH: 'death',
+      WAR_OR_ARMED_CONFLICT: 'war / armed conflict',
+      SEXUAL_CONTENT: 'sexual content',
+      STRONG_LANGUAGE: 'strong language',
+      DRUGS: 'drugs',
+      SELF_HARM: 'self-harm',
+      DISTURBING_CONTENT: 'disturbing content',
+    },
+  };
 
   function language() {
     const pathMatch = location.pathname.match(/\/(pl|en)(?:\/|$)/i);
@@ -17,27 +41,39 @@
       ? {
           age: 'Wiek',
           ageUnset: 'nie ustawiono',
+          ageClassification: 'Klasyfikacja wieku',
+          allAges: 'Dla wszystkich',
+          content: 'Treść',
           unreviewed: 'Bez moderacji',
+          unreviewedBadge: 'Bez przeglądu moderatora',
+          reviewRequiredBadge: 'Wymagany przegląd redakcyjny',
           on: 'WŁ.',
           off: 'WYŁ.',
           unreviewedWarning: 'Materiały bez przeglądu moderatora zostały przygotowane i sprawdzone przez automatyczny system VeriNews, ale nie przeszły dodatkowego przeglądu człowieka. Mogą zawierać błędy lub wymagać korekty. Pokazać je?',
           ageBlocked: 'Treść przekracza ustawiony przez Ciebie poziom wieku.',
           unreviewedBlocked: 'Materiał nie przeszedł jeszcze przeglądu moderatora.',
           combinedBlocked: 'Materiał przekracza ustawiony poziom wieku i nie przeszedł jeszcze przeglądu moderatora.',
-          hardBlocked: 'Materiał oczekuje na wymagany przegląd i nie jest obecnie dostępny do odblokowania.',
+          hardTitle: 'Wymagany przegląd redakcyjny',
+          hardBlocked: 'Materiał nie został jeszcze dopuszczony do publikacji przez moderatora.',
           reveal: 'Rozumiem, pokaż materiał',
         }
       : {
           age: 'Age',
           ageUnset: 'not set',
+          ageClassification: 'Age classification',
+          allAges: 'All ages',
+          content: 'Content',
           unreviewed: 'Unreviewed',
+          unreviewedBadge: 'Not yet moderator-reviewed',
+          reviewRequiredBadge: 'Editorial review required',
           on: 'ON',
           off: 'OFF',
           unreviewedWarning: 'Material without moderator review was prepared and evidence-checked by the automated VeriNews system, but has not completed additional human review. It may contain errors or require correction. Show it?',
           ageBlocked: 'This content is above your selected age level.',
           unreviewedBlocked: 'This material has not yet completed moderator review.',
           combinedBlocked: 'This material is above your selected age level and has not yet completed moderator review.',
-          hardBlocked: 'This material is awaiting required review and cannot currently be unlocked.',
+          hardTitle: 'Editorial review required',
+          hardBlocked: 'This material has not yet been approved for publication by a moderator.',
           reveal: 'I understand, show this material',
         };
   }
@@ -88,6 +124,80 @@
     };
   }
 
+  function formatAgeRating(raw, l) {
+    return String(raw || 'ALL') === 'ALL' ? l.allAges : String(raw);
+  }
+
+  function descriptorLabel(raw) {
+    const lang = language();
+    return DESCRIPTOR_LABELS[lang]?.[raw]
+      || String(raw).toLowerCase().replaceAll('_', ' ');
+  }
+
+  function storedDescriptors(gate, detail) {
+    if (gate.dataset.presentationDescriptors) {
+      try { return JSON.parse(gate.dataset.presentationDescriptors); } catch {}
+    }
+    const raw = detail?.textContent || '';
+    const suffix = raw.split('·').slice(1).join('·').trim();
+    const descriptors = suffix ? suffix.split(',').map((value) => value.trim()).filter(Boolean) : [];
+    gate.dataset.presentationDescriptors = JSON.stringify(descriptors);
+    return descriptors;
+  }
+
+  function setMetaLine(node, label, value) {
+    if (!node) return;
+    node.textContent = '';
+    const labelNode = document.createElement('span');
+    labelNode.className = 'restriction-meta-label';
+    labelNode.textContent = `${label}: `;
+    node.append(labelNode, document.createTextNode(value));
+  }
+
+  function syncGatePresentation(gate, l) {
+    const rating = gate.dataset.ageRating || 'ALL';
+    gate.querySelectorAll('.age-pill').forEach((pill) => {
+      pill.textContent = formatAgeRating(rating, l);
+    });
+
+    gate.querySelectorAll('.moderation-pill').forEach((pill) => {
+      pill.textContent = isHardBlocked(gate) ? l.reviewRequiredBadge : l.unreviewedBadge;
+    });
+
+    const notice = gate.querySelector('[data-gate-notice]');
+    if (!notice) return;
+    const detail = notice.querySelector('.restriction-detail');
+    const descriptors = storedDescriptors(gate, detail);
+
+    let heading = notice.querySelector('[data-gate-heading]');
+    if (isHardBlocked(gate)) {
+      if (!heading) {
+        heading = document.createElement('p');
+        heading.className = 'restriction-heading';
+        heading.dataset.gateHeading = 'true';
+        notice.insertBefore(heading, notice.firstChild);
+      }
+      heading.textContent = l.hardTitle;
+    } else if (heading) {
+      heading.remove();
+    }
+
+    setMetaLine(detail, l.ageClassification, formatAgeRating(rating, l));
+
+    let contentDetail = notice.querySelector('[data-gate-content-detail]');
+    if (descriptors.length) {
+      if (!contentDetail) {
+        contentDetail = document.createElement('p');
+        contentDetail.className = 'restriction-detail restriction-content-detail';
+        contentDetail.dataset.gateContentDetail = 'true';
+        detail?.insertAdjacentElement('afterend', contentDetail);
+      }
+      setMetaLine(contentDetail, l.content, descriptors.map(descriptorLabel).join(', '));
+    } else if (contentDetail) {
+      contentDetail.remove();
+    }
+  }
+
   function setTitleState(gate, locked) {
     gate.querySelectorAll('[data-gate-safe-title]').forEach((node) => {
       node.hidden = !locked;
@@ -99,6 +209,7 @@
 
   function updateGate(gate) {
     const l = labels();
+    syncGatePresentation(gate, l);
     const state = restrictions(gate);
     const forced = gate.dataset.forceReveal === 'true';
     const locked = state.hard || (!forced && (state.age || state.unreviewed));
@@ -222,6 +333,16 @@
     });
   }
 
+  function syncPreviewSource() {
+    const source = document.querySelector('meta[name="verinews-source-commit"]')?.content || '';
+    if (!/^[0-9a-f]{40}$/.test(source)) return;
+    document.querySelectorAll('.site-footer p').forEach((node) => {
+      if (/source\s+[0-9a-f]{12}/i.test(node.textContent || '')) {
+        node.textContent = (node.textContent || '').replace(/source\s+[0-9a-f]{12}/i, `source ${source.slice(0, 12)}`);
+      }
+    });
+  }
+
   function mount() {
     const utilities = ensureUtilities();
     if (utilities && !utilities.querySelector('.reader-controls')) {
@@ -242,6 +363,7 @@
     });
 
     updateAll();
+    syncPreviewSource();
   }
 
   if (document.readyState === 'loading') {

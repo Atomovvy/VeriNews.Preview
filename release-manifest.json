@@ -4,6 +4,5 @@
   "channel": "preview",
   "source_repository": "Atomovvy/VeriNews.Dev",
   "source_pull_request": 9,
-  "source_commit": "23a29d67a17f5eb4cc5f10e1c130b59f4dd5f040",
-  "preview_branch": "agent/publish-preview-v01"
+  "source_commit": "2ef386f6cf1fc190d2afe4d43c16e7475dda2a51"
 }
