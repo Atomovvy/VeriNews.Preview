@@ -7,6 +7,7 @@ confidence_score: 88
 confidence_band: HIGH
 methodology_version: "1.0"
 updated_at: 2026-08-10T09:14:00Z
+category: world
 ---
 
 # Netanyahu rejects the 15-point Gaza document and ties withdrawal to Hamas disarmament
@@ -15,12 +16,9 @@ updated_at: 2026-08-10T09:14:00Z
 
 On August 9, Israeli Prime Minister Benjamin Netanyahu told a Cabinet meeting that Israel did not accept the 15-point Gaza document. He also said the Israeli military would not withdraw until Hamas was disarmed. Reuters and AP independently report those remarks. Both also report that Hamas official Bassem Naim said the group remained committed to the agreed road map.
 
-## Assessment
+## Why this assessment
 
-**Assessment:** SUPPORTED  
-**Confidence:** 88/100 — HIGH
-
-Two independent reporting teams quote the same key Netanyahu statements. This pilot did not locate a direct official transcript of the Cabinet meeting, so confidence remains below what would normally be assigned to a package containing primary evidence. The situation is fast-moving, therefore the story is `PROVISIONAL`.
+Two independent reporting teams quote the same key Netanyahu statements. This pilot did not locate a direct official transcript of the Cabinet meeting, so confidence remains below what would normally be assigned to a package containing primary evidence. The situation is fast-moving, so the story remains a provisional assessment.
 
 ## What is confirmed
 
@@ -40,9 +38,9 @@ Two independent reporting teams quote the same key Netanyahu statements. This pi
 
 ## Key claims
 
-- `CLAIM-01` — SUPPORTED, 89/100 HIGH: Netanyahu said Israel rejects the 15-point document.
-- `CLAIM-02` — SUPPORTED, 90/100 VERY_HIGH: he said withdrawal would not occur before Hamas is disarmed.
-- `CLAIM-03` — SUPPORTED, 87/100 HIGH: Bassem Naim said Hamas remained committed to the road map.
+- Netanyahu said Israel rejects the 15-point document — **Supported · 89/100 · High**.
+- He said withdrawal would not occur before Hamas is disarmed — **Supported · 90/100 · Very high**.
+- Bassem Naim said Hamas remained committed to the road map — **Supported · 87/100 · High**.
 
 ## Sources
 
