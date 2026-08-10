@@ -7,6 +7,7 @@ confidence_score: 88
 confidence_band: HIGH
 methodology_version: "1.0"
 updated_at: 2026-08-10T09:14:00Z
+category: ai
 ---
 
 # OpenAI zaostrza zabezpieczenia wokół Astry i wstrzymuje część wewnętrznych prac
@@ -17,10 +18,7 @@ updated_at: 2026-08-10T09:14:00Z
 
 To nie jest równoznaczne z niezależnym potwierdzeniem, że Astra osiągnęła poziom `Critical`, ani z całkowitym zatrzymaniem rozwoju modelu.
 
-## Ocena
-
-**Assessment:** SUPPORTED  
-**Pewność oceny:** 88/100 — HIGH
+## Dlaczego taka ocena
 
 Najważniejsze fakty dotyczące decyzji OpenAI są bezpośrednio opisane przez firmę i niezależnie relacjonowane przez Axios. Największa niepewność dotyczy samego poziomu możliwości Astry, ponieważ publicznie dostępna jest na razie przede wszystkim wstępna ocena OpenAI, a nie niezależny zestaw wyników pozwalający samodzielnie odtworzyć werdykt `Critical`.
 
@@ -32,7 +30,7 @@ Najważniejsze fakty dotyczące decyzji OpenAI są bezpośrednio opisane przez f
 
 ## Co jest częściowo potwierdzone, sporne lub obalone
 
-- Publiczne materiały nie pozwalają niezależnie stwierdzić, że Astra faktycznie osiągnęła poziom `Critical`. Poprawny claim brzmi: OpenAI **nie może tego poziomu wykluczyć** na podstawie swoich wstępnych testów.
+- Publiczne materiały nie pozwalają niezależnie stwierdzić, że Astra faktycznie osiągnęła poziom `Critical`. Poprawne twierdzenie brzmi: OpenAI **nie może tego poziomu wykluczyć** na podstawie swoich wstępnych testów.
 - Określenie „OpenAI zatrzymało rozwój Astry” byłoby zbyt szerokie. Oficjalny komunikat mówi o wstrzymaniu aktywności, które nie spełniają wzmocnionych wymagań bezpieczeństwa.
 
 ## Co nadal pozostaje nieznane
@@ -41,11 +39,11 @@ Najważniejsze fakty dotyczące decyzji OpenAI są bezpośrednio opisane przez f
 - ostateczna klasyfikacja jej możliwości cyber,
 - dokładny termin ewentualnego publicznego wydania modelu.
 
-## Najważniejsze claimy
+## Najważniejsze twierdzenia
 
-- `CLAIM-01` — SUPPORTED, 88/100 HIGH: OpenAI nie może wykluczyć poziomu `Critical` na podstawie wstępnych testów.
-- `CLAIM-02` — SUPPORTED, 91/100 VERY_HIGH: część aktywności z Astrą została wstrzymana do czasu spełnienia zaostrzonych kontroli.
-- `CLAIM-03` — SUPPORTED, 68/100 MODERATE: OpenAI twierdzi, że Astra nie uczestniczyła w incydencie Hugging Face; brak niezależnego potwierdzenia tego szczegółu.
+- OpenAI nie może wykluczyć poziomu `Critical` na podstawie wstępnych testów — **POTWIERDZONE · 88/100 · WYSOKA**.
+- Część aktywności z Astrą została wstrzymana do czasu spełnienia zaostrzonych kontroli — **POTWIERDZONE · 91/100 · BARDZO WYSOKA**.
+- OpenAI twierdzi, że Astra nie uczestniczyła w incydencie Hugging Face; brak niezależnego potwierdzenia tego szczegółu — **POTWIERDZONE · 68/100 · UMIARKOWANA**.
 
 ## Źródła
 
@@ -56,7 +54,7 @@ Najważniejsze fakty dotyczące decyzji OpenAI są bezpośrednio opisane przez f
 ## Aktualność
 
 **Stan na:** 2026-08-10T09:14:00Z  
-Materiał ma status `PROVISIONAL`, ponieważ ocena możliwości modelu jest nadal wstępna i może zostać zmieniona po dalszych testach.
+Materiał pozostaje **wstępną oceną**, ponieważ ocena możliwości modelu jest nadal wstępna i może zostać zmieniona po dalszych testach.
 
 ## Pełna analiza
 
