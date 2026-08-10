@@ -73,7 +73,9 @@
     frame(r,`<section class="hero"><p class="eyebrow">VeriNews V0.1 · M4 preview</p><h1>${esc(x.tag)}</h1><p>${esc(x.method)}</p></section><section class="story-list"><h2>${esc(x.latest)}</h2>${cards}</section>`);
   }
   async function story(r){
-    const kind=r.analysis?'analysis':'article', d=await load(r.slug,kind,r.lang), ts=titleSummary(d.body); let body=evidence(d.meta,r.lang)+`<article class="prose">${markdown(d.body)}</article>`;
+    const kind=r.analysis?'analysis':'article', d=await load(r.slug,kind,r.lang), ts=titleSummary(d.body);
+    const displayBody=r.analysis?d.body:d.body.replace(/\n##\s+(?:Pełna analiza|Full analysis)\s*\n[\s\S]*$/i,'');
+    let body=evidence(d.meta,r.lang)+`<article class="prose">${markdown(displayBody)}</article>`;
     if(!r.analysis) body+=`<p class="analysis-cta"><a href="${BASE}${r.lang}/news/${r.slug}/analysis/">${T[r.lang].analysis} →</a></p>`;
     frame(r,body,(r.analysis?(r.lang==='pl'?'Analiza: ':'Analysis: '):'')+ts.title);
   }
