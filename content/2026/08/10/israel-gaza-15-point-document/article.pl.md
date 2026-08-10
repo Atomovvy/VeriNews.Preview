@@ -7,6 +7,7 @@ confidence_score: 88
 confidence_band: HIGH
 methodology_version: "1.0"
 updated_at: 2026-08-10T09:14:00Z
+category: world
 ---
 
 # Netanjahu odrzuca 15-punktowy dokument dla Gazy i uzależnia wycofanie wojsk od rozbrojenia Hamasu
@@ -15,12 +16,9 @@ updated_at: 2026-08-10T09:14:00Z
 
 9 sierpnia premier Izraela Benjamin Netanjahu powiedział podczas posiedzenia gabinetu, że Izrael nie akceptuje 15-punktowego dokumentu dotyczącego Gazy. Dodał, że izraelskie wojsko nie wycofa się, dopóki Hamas nie zostanie rozbrojony. Reuters i AP niezależnie relacjonują te wypowiedzi. Obie agencje podają też, że przedstawiciel Hamasu deklarował dalsze przywiązanie do uzgodnionej mapy drogowej.
 
-## Ocena
+## Dlaczego taka ocena
 
-**Assessment:** SUPPORTED  
-**Pewność oceny:** 88/100 — HIGH
-
-Dwa niezależne zespoły reporterskie przytaczają te same kluczowe wypowiedzi Netanjahu. Nie znaleziono w czasie tego pilota bezpośredniego, oficjalnego zapisu posiedzenia gabinetu, dlatego confidence pozostaje poniżej poziomu typowego dla zestawu zawierającego źródło pierwotne. Wydarzenie jest szybkozmienne, więc materiał ma status `PROVISIONAL`.
+Dwa niezależne zespoły reporterskie przytaczają te same kluczowe wypowiedzi Netanjahu. Nie znaleziono w czasie tego pilota bezpośredniego, oficjalnego zapisu posiedzenia gabinetu, dlatego poziom wiarygodności pozostaje poniżej poziomu typowego dla zestawu zawierającego źródło pierwotne. Wydarzenie jest szybkozmienne, więc materiał pozostaje wstępną oceną.
 
 ## Co jest potwierdzone
 
@@ -38,11 +36,11 @@ Dwa niezależne zespoły reporterskie przytaczają te same kluczowe wypowiedzi N
 - czy i kiedy warunki wycofania oraz rozbrojenia zostaną wdrożone,
 - jak zmieni się stanowisko stron po kolejnych rozmowach z USA i mediatorami.
 
-## Najważniejsze claimy
+## Najważniejsze twierdzenia
 
-- `CLAIM-01` — SUPPORTED, 89/100 HIGH: Netanjahu powiedział, że Izrael odrzuca 15-punktowy dokument.
-- `CLAIM-02` — SUPPORTED, 90/100 VERY_HIGH: powiedział, że wycofanie nie nastąpi przed rozbrojeniem Hamasu.
-- `CLAIM-03` — SUPPORTED, 87/100 HIGH: Bassem Naim deklarował dalsze przywiązanie Hamasu do mapy drogowej.
+- Netanjahu powiedział, że Izrael odrzuca 15-punktowy dokument — **POTWIERDZONE · 89/100 · WYSOKA**.
+- Powiedział, że wycofanie nie nastąpi przed rozbrojeniem Hamasu — **POTWIERDZONE · 90/100 · BARDZO WYSOKA**.
+- Bassem Naim deklarował dalsze przywiązanie Hamasu do mapy drogowej — **POTWIERDZONE · 87/100 · WYSOKA**.
 
 ## Źródła
 
@@ -52,7 +50,7 @@ Dwa niezależne zespoły reporterskie przytaczają te same kluczowe wypowiedzi N
 ## Aktualność
 
 **Stan na:** 2026-08-10T09:14:00Z  
-To szybkozmienny proces polityczny. Kolejne wypowiedzi lub uzgodnienia mogą wymagać zmiany statusu, assessmentu albo confidence.
+To szybkozmienny proces polityczny. Kolejne wypowiedzi lub uzgodnienia mogą wymagać zmiany statusu, oceny albo poziomu wiarygodności.
 
 ## Pełna analiza
 
