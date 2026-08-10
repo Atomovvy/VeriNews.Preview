@@ -24,9 +24,14 @@
     return VALID.has(root.dataset.theme) ? root.dataset.theme : systemTheme();
   }
 
+  function currentLanguage() {
+    const pathMatch = location.pathname.match(/\/(pl|en)(?:\/|$)/i);
+    if (pathMatch) return pathMatch[1].toLowerCase();
+    return (root.lang || 'pl').toLowerCase().startsWith('en') ? 'en' : 'pl';
+  }
+
   function labels() {
-    const pl = (root.lang || '').toLowerCase().startsWith('pl');
-    return pl
+    return currentLanguage() === 'pl'
       ? { group: 'Motyw', light: 'Jasny', dark: 'Ciemny' }
       : { group: 'Theme', light: 'Light', dark: 'Dark' };
   }
