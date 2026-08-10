@@ -12,10 +12,7 @@
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.65; }
-body.analysis-page {
+:root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #111310;
   --surface: #181b17;
@@ -27,12 +24,22 @@ body.analysis-page {
   --code: #232720;
   --header: color-mix(in srgb, var(--bg) 94%, transparent);
 }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.65; transition: background-color .16s ease, color .16s ease; }
 a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
 .site-header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: var(--header); backdrop-filter: blur(14px); }
 .header-inner { max-width: 1100px; margin: 0 auto; min-height: 58px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { color: var(--text); font-size: 1.08rem; font-weight: 800; letter-spacing: .02em; text-decoration: none; }
+.header-utilities { display: flex; align-items: center; gap: 16px; margin-left: auto; }
 .language { display: flex; gap: 8px; font-size: .88rem; font-weight: 700; }
 .language .active { color: var(--text); }
+.theme-switch { display: inline-flex; padding: 2px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.theme-choice { appearance: none; border: 0; border-radius: 999px; background: transparent; color: var(--muted); padding: 5px 8px; font: inherit; font-size: .72rem; font-weight: 750; cursor: pointer; }
+.theme-choice:hover { color: var(--text); }
+.theme-choice.active { color: var(--text); background: var(--accent-soft); }
+.theme-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .category-strip { border-top: 1px solid var(--line); overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .category-strip::-webkit-scrollbar { display: none; }
 .category-nav { width: max-content; min-width: min(100%, 1100px); margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 4px; }
@@ -75,8 +82,6 @@ a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offse
 .prose code { padding: .13rem .35rem; border-radius: 5px; background: var(--code); font-size: .9em; }
 .prose pre { padding: 18px; overflow-x: auto; border-radius: 10px; background: var(--code); }
 .prose pre code { padding: 0; background: none; }
-.analysis-page .prose { max-width: 800px; }
-.analysis-page .prose h2 { color: var(--text); }
 .table-wrap { width: 100%; overflow-x: auto; margin: 1.4rem 0; }
 table { width: 100%; border-collapse: collapse; font-size: .92rem; }
 th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
@@ -89,6 +94,8 @@ th { background: var(--accent-soft); }
   .shell { padding-top: 28px; }
   .hero { padding-top: 24px; }
   .category-nav { min-width: max-content; padding-inline: 12px 24px; }
+  .header-utilities { gap: 10px; }
+  .theme-choice { padding-inline: 7px; }
   .evidence-bar { grid-template-columns: 1fr 1fr; }
   .evidence-bar > div:nth-child(2) { border-right: 0; }
   .evidence-bar > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -96,7 +103,10 @@ th { background: var(--accent-soft); }
 
 @media (max-width: 480px) {
   .shell, .site-footer { width: min(100% - 24px, 1000px); }
-  .header-inner { padding: 0 12px; min-height: 54px; }
+  .header-inner { padding: 0 12px; min-height: 54px; gap: 10px; }
+  .header-utilities { gap: 8px; }
+  .theme-choice { font-size: .68rem; padding: 4px 6px; }
+  .language { font-size: .8rem; }
   .category-nav a { padding-inline: 10px; }
   .evidence-bar { grid-template-columns: 1fr; }
   .evidence-bar > div { border-right: 0; border-bottom: 1px solid var(--line); min-height: 78px; }
