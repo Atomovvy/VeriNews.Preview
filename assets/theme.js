@@ -76,16 +76,20 @@
 
   function mount() {
     const header = document.querySelector('.header-inner');
-    if (!header || header.querySelector('.theme-switch')) {
-      syncControls();
-      return;
+    if (!header) return;
+
+    let utilities = header.querySelector('.header-utilities');
+    if (!utilities) {
+      utilities = document.createElement('div');
+      utilities.className = 'header-utilities';
+      const language = header.querySelector('.language');
+      if (language) utilities.appendChild(language);
+      header.appendChild(utilities);
     }
-    const language = header.querySelector('.language');
-    const utilities = document.createElement('div');
-    utilities.className = 'header-utilities';
-    utilities.appendChild(createControl());
-    if (language) utilities.appendChild(language);
-    header.appendChild(utilities);
+
+    if (!utilities.querySelector('.theme-switch')) {
+      utilities.insertBefore(createControl(), utilities.firstChild);
+    }
     syncControls();
   }
 
@@ -96,9 +100,6 @@
   } else {
     mount();
   }
-
-  const observer = new MutationObserver(() => mount());
-  observer.observe(document.documentElement, { childList: true, subtree: true });
 
   window.VeriNewsTheme = {
     get: currentTheme,
