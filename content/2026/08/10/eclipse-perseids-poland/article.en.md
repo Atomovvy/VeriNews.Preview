@@ -7,6 +7,7 @@ confidence_score: 94
 confidence_band: VERY_HIGH
 methodology_version: "1.0"
 updated_at: 2026-08-10T09:14:00Z
+category: science
 ---
 
 # August 12: a partial solar eclipse across Poland, followed by the Perseid peak
@@ -15,10 +16,7 @@ updated_at: 2026-08-10T09:14:00Z
 
 On August 12, 2026, the path of total solar eclipse will cross areas including Greenland, Iceland, and part of Spain. Poland will see the event as a partial eclipse. Later that evening and overnight into August 13, the Perseid meteor shower will peak, while a New Moon should provide a dark sky if local weather cooperates.
 
-## Assessment
-
-**Assessment:** SUPPORTED  
-**Confidence:** 94/100 — VERY_HIGH
+## Why this assessment
 
 The eclipse geometry and Perseid peak timing are consistently described by NASA and Polish PAP/Science in Poland material. The main uncertainty concerns local weather and fine-grained observing parameters at a specific location, not whether the astronomical events will occur.
 
@@ -41,10 +39,10 @@ The eclipse geometry and Perseid peak timing are consistently described by NASA 
 
 ## Key claims
 
-- `CLAIM-01` — SUPPORTED, 95/100 VERY_HIGH: the August 12 eclipse is total along a North Atlantic/European path and partial in Poland.
-- `CLAIM-02` — SUPPORTED, 86/100 HIGH: in Poland the partial eclipse begins around 19:10–19:20 local time and in part of the country maximum eclipse occurs after sunset.
-- `CLAIM-03` — SUPPORTED, 95/100 VERY_HIGH: the Perseids peak August 12–13 under a New Moon.
-- `CLAIM-04` — SUPPORTED, 96/100 VERY_HIGH: partial-eclipse viewing requires proper eye protection.
+- The August 12 eclipse is total along a North Atlantic/European path and partial in Poland — **Supported · 95/100 · Very high**.
+- In Poland the partial eclipse begins around 19:10–19:20 local time and in part of the country maximum eclipse occurs after sunset — **Supported · 86/100 · High**.
+- The Perseids peak August 12–13 under a New Moon — **Supported · 95/100 · Very high**.
+- Partial-eclipse viewing requires proper eye protection — **Supported · 96/100 · Very high**.
 
 ## Sources
 
