@@ -7,6 +7,7 @@ confidence_score: 94
 confidence_band: VERY_HIGH
 methodology_version: "1.0"
 updated_at: 2026-08-10T09:14:00Z
+category: science
 ---
 
 # 12 sierpnia: częściowe zaćmienie Słońca w całej Polsce, a nocą maksimum Perseidów
@@ -15,10 +16,7 @@ updated_at: 2026-08-10T09:14:00Z
 
 12 sierpnia 2026 r. pas całkowitego zaćmienia Słońca przejdzie m.in. przez Grenlandię, Islandię i część Hiszpanii. W Polsce zjawisko będzie widoczne jako zaćmienie częściowe. Tego samego wieczoru i w nocy z 12 na 13 sierpnia maksimum osiągną Perseidy, a nów Księżyca zapewni bardzo ciemne niebo, jeśli dopisze lokalna pogoda.
 
-## Ocena
-
-**Assessment:** SUPPORTED  
-**Pewność oceny:** 94/100 — VERY_HIGH
+## Dlaczego taka ocena
 
 Geometria zaćmienia i termin maksimum Perseidów są zgodnie opisane przez NASA oraz polskie materiały PAP/Nauka w Polsce. Niepewność dotyczy głównie lokalnych warunków pogodowych i bardzo szczegółowych parametrów obserwacji w konkretnym miejscu, a nie samego wystąpienia zjawisk.
 
@@ -39,12 +37,12 @@ Geometria zaćmienia i termin maksimum Perseidów są zgodnie opisane przez NASA
 - rzeczywista liczba meteorów widocznych z danego miejsca,
 - lokalne przeszkody na zachodnim horyzoncie.
 
-## Najważniejsze claimy
+## Najważniejsze twierdzenia
 
-- `CLAIM-01` — SUPPORTED, 95/100 VERY_HIGH: zaćmienie 12 sierpnia będzie całkowite w pasie północnego Atlantyku i części Europy, a w Polsce częściowe.
-- `CLAIM-02` — SUPPORTED, 86/100 HIGH: w Polsce początek przypada około 19:10–19:20, a w części kraju maksimum nastąpi już po zachodzie Słońca.
-- `CLAIM-03` — SUPPORTED, 95/100 VERY_HIGH: Perseidy osiągną maksimum 12–13 sierpnia podczas nowiu.
-- `CLAIM-04` — SUPPORTED, 96/100 VERY_HIGH: obserwacja częściowego zaćmienia wymaga właściwej ochrony wzroku.
+- Zaćmienie 12 sierpnia będzie całkowite w pasie północnego Atlantyku i części Europy, a w Polsce częściowe — **POTWIERDZONE · 95/100 · BARDZO WYSOKA**.
+- W Polsce początek przypada około 19:10–19:20, a w części kraju maksimum nastąpi już po zachodzie Słońca — **POTWIERDZONE · 86/100 · WYSOKA**.
+- Perseidy osiągną maksimum 12–13 sierpnia podczas nowiu — **POTWIERDZONE · 95/100 · BARDZO WYSOKA**.
+- Obserwacja częściowego zaćmienia wymaga właściwej ochrony wzroku — **POTWIERDZONE · 96/100 · BARDZO WYSOKA**.
 
 ## Źródła
 
