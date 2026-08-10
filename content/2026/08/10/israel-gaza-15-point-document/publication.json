@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "story_id": "2026-08-10-israel-gaza-15-point-document",
+  "risk_class": "REVIEW_REQUIRED",
+  "risk_flags": [
+    "WAR_TERRORISM_OR_MAJOR_CONFLICT"
+  ],
+  "publication_state": "PUBLICATION_CANDIDATE",
+  "publication_mode": "BLOCKED_PENDING_REVIEW",
+  "moderation_status": "REVIEW_REQUIRED",
+  "age_rating": "12+",
+  "content_descriptors": [
+    "WAR_OR_ARMED_CONFLICT"
+  ],
+  "safe_headline_pl": null,
+  "safe_headline_en": null,
+  "human_review": {
+    "required": true,
+    "status": "PENDING",
+    "reviewed_at": null,
+    "review_note": null
+  },
+  "legal_review": {
+    "required": false,
+    "status": "NOT_REQUIRED",
+    "reviewed_at": null,
+    "review_note": null
+  },
+  "copyright_review": {
+    "status": "PASS",
+    "review_note": "Public VeriNews output is text-only; third-party source media is linked rather than republished."
+  },
+  "public_vocabulary": {
+    "status": "PASS",
+    "review_note": "Current reader wording reports attributed positions without intent or prohibited strong-label escalation."
+  },
+  "approved_source_commit": null,
+  "updated_at": "2026-08-10T18:53:00Z"
+}
