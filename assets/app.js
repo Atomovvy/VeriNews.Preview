@@ -2,9 +2,31 @@
   'use strict';
   const BASE = location.pathname.startsWith('/VeriNews.Preview/') ? '/VeriNews.Preview/' : '/';
   const STORIES = ['openai-astra-cyber-controls','israel-gaza-15-point-document','eclipse-perseids-poland'];
+  const CATEGORIES = [
+    {id:'poland',pl:'Polska',en:'Poland'},
+    {id:'world',pl:'Świat',en:'World'},
+    {id:'ai',pl:'AI',en:'AI'},
+    {id:'technology',pl:'Technologia',en:'Technology'},
+    {id:'science',pl:'Nauka',en:'Science'},
+    {id:'cyber',pl:'Cyber',en:'Cyber'},
+    {id:'economy',pl:'Gospodarka',en:'Economy'}
+  ];
+  const CAT = Object.fromEntries(CATEGORIES.map(c=>[c.id,c]));
   const T = {
-    pl:{tag:'Wiadomości z jawną ścieżką weryfikacji.',latest:'Najnowsze analizy',assessment:'Ocena',confidence:'Poziom wiarygodności',status:'Status',updated:'Stan dowodów',read:'Czytaj materiał',analysis:'Pełna analiza',method:'Confidence opisuje pewność bieżącej oceny dowodów, nie procent prawdy.',error:'Nie udało się wczytać podglądu.'},
-    en:{tag:'News with a visible verification trail.',latest:'Latest analyses',assessment:'Assessment',confidence:'Confidence level',status:'Status',updated:'Evidence state',read:'Read story',analysis:'Full analysis',method:'Confidence describes certainty in the current evidence assessment, not a percentage of truth.',error:'The preview could not be loaded.'}
+    pl:{tag:'Wiadomości z jawną ścieżką weryfikacji.',latest:'Najnowsze analizy',assessment:'Ocena',confidence:'Poziom wiarygodności',status:'Status',updated:'Stan dowodów',read:'Czytaj materiał',analysis:'Pełna analiza',method:'Poziom wiarygodności opisuje pewność bieżącej oceny dowodów, nie procent prawdy.',empty:'W tej kategorii nie ma jeszcze opublikowanych materiałów.',error:'Nie udało się wczytać podglądu.'},
+    en:{tag:'News with a visible verification trail.',latest:'Latest analyses',assessment:'Assessment',confidence:'Confidence level',status:'Status',updated:'Evidence state',read:'Read story',analysis:'Full analysis',method:'Confidence describes certainty in the current evidence assessment, not a percentage of truth.',empty:'There are no published stories in this category yet.',error:'The preview could not be loaded.'}
+  };
+  const ASSESSMENT = {
+    pl:{PENDING:'OCZEKUJE',SUPPORTED:'POTWIERDZONE',PARTIALLY_SUPPORTED:'CZĘŚCIOWO POTWIERDZONE',INSUFFICIENT_EVIDENCE:'NIEWYSTARCZAJĄCE DOWODY',DISPUTED:'SPORNE',CONTRADICTED:'OBALONE',NOT_YET_VERIFIABLE:'JESZCZE NIEWERYFIKOWALNE'},
+    en:{PENDING:'Pending',SUPPORTED:'Supported',PARTIALLY_SUPPORTED:'Partly supported',INSUFFICIENT_EVIDENCE:'Insufficient evidence',DISPUTED:'Disputed',CONTRADICTED:'Contradicted',NOT_YET_VERIFIABLE:'Not yet verifiable'}
+  };
+  const STATUS = {
+    pl:{DISCOVERED:'ODKRYTE',ANALYZING:'W ANALIZIE',PROVISIONAL:'WSTĘPNA OCENA',VERIFIED:'ZWERYFIKOWANE',DISPUTED:'SPORNE',OUTDATED:'NIEAKTUALNE',RETRACTED:'WYCOFANE'},
+    en:{DISCOVERED:'Discovered',ANALYZING:'Analyzing',PROVISIONAL:'Provisional',VERIFIED:'Verified',DISPUTED:'Disputed',OUTDATED:'Outdated',RETRACTED:'Retracted'}
+  };
+  const BAND = {
+    pl:{LOW:'NISKA',LIMITED:'OGRANICZONA',MODERATE:'UMIARKOWANA',HIGH:'WYSOKA',VERY_HIGH:'BARDZO WYSOKA'},
+    en:{LOW:'Low',LIMITED:'Limited',MODERATE:'Moderate',HIGH:'High',VERY_HIGH:'Very high'}
   };
   const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function safeHref(raw){
@@ -58,27 +80,60 @@
     const rel=location.pathname.startsWith(BASE)?location.pathname.slice(BASE.length):location.pathname.replace(/^\//,'');
     const a=rel.split('/').filter(Boolean); if(!a.length) return {redirect:true};
     const lang=['pl','en'].includes(a[0])?a[0]:'pl';
-    if(a[1]==='news' && STORIES.includes(a[2])) return {lang,slug:a[2],analysis:a[3]==='analysis'};
-    return {lang};
+    if(a[1]==='category' && CAT[a[2]]) return {lang,category:a[2],kind:'category'};
+    if(a[1]==='news' && STORIES.includes(a[2])) return {lang,slug:a[2],analysis:a[3]==='analysis',kind:a[3]==='analysis'?'analysis':'article'};
+    return {lang,kind:'home'};
   }
-  function paired(r){ const o=r.lang==='pl'?'en':'pl'; if(!r.slug) return `${BASE}${o}/`; return `${BASE}${o}/news/${r.slug}/${r.analysis?'analysis/':''}`; }
+  function paired(r){
+    const o=r.lang==='pl'?'en':'pl';
+    if(r.category) return `${BASE}${o}/category/${r.category}/`;
+    if(r.slug) return `${BASE}${o}/news/${r.slug}/${r.analysis?'analysis/':''}`;
+    return `${BASE}${o}/`;
+  }
+  function categoryLabel(id,lang){ return CAT[id]?.[lang] || id; }
+  function categoryNav(r){
+    const latest=r.kind==='home'?' active':'';
+    const links=[`<a class="${latest.trim()}" href="${BASE}${r.lang}/">${r.lang==='pl'?'Najnowsze':'Latest'}</a>`];
+    for(const c of CATEGORIES){
+      const active=r.category===c.id?' active':'';
+      links.push(`<a class="${active.trim()}" href="${BASE}${r.lang}/category/${c.id}/">${esc(c[r.lang])}</a>`);
+    }
+    return `<div class="category-strip"><nav class="category-nav" aria-label="Categories">${links.join('')}</nav></div>`;
+  }
   function frame(r,body,title='VeriNews'){
     const x=T[r.lang], other=r.lang==='pl'?'EN':'PL'; document.title=`${title} · VeriNews`;
-    document.body.innerHTML=`<header class="site-header"><div class="header-inner"><a class="brand" href="${BASE}${r.lang}/">VeriNews</a><nav class="language" aria-label="Language"><span class="active">${r.lang.toUpperCase()}</span><span>/</span><a href="${paired(r)}">${other}</a></nav></div></header><main class="shell">${body}</main><footer class="site-footer"><p>${esc(x.method)}</p><p>M4 preview · Git-backed · methodology 1.0</p></footer>`;
+    document.body.className=`${r.kind||'home'}-page`;
+    document.body.innerHTML=`<header class="site-header"><div class="header-inner"><a class="brand" href="${BASE}${r.lang}/">VeriNews</a><nav class="language" aria-label="Language"><span class="active">${r.lang.toUpperCase()}</span><span>/</span><a href="${paired(r)}">${other}</a></nav></div>${categoryNav(r)}</header><main class="shell">${body}</main><footer class="site-footer"><p>${esc(x.method)}</p><p>M4 preview · Git-backed · methodology 1.0</p></footer>`;
   }
-  function evidence(meta,lang){ const x=T[lang]; return `<section class="evidence-bar" aria-label="Evidence summary"><div><span>${x.assessment}</span><strong>${esc(meta.overall_assessment)}</strong></div><div><span>${x.confidence}</span><strong>${esc(meta.confidence_score)}/100 · ${esc(meta.confidence_band)}</strong></div><div><span>${x.status}</span><strong>${esc(meta.status)}</strong></div><div><span>${x.updated}</span><strong>${esc(meta.updated_at)}</strong></div></section>`; }
+  function display(table,value,lang,technical){ return technical ? String(value) : (table[lang]?.[value] || String(value)); }
+  function evidence(meta,lang,technical=false){
+    const x=T[lang], a=display(ASSESSMENT,meta.overall_assessment,lang,technical), s=display(STATUS,meta.status,lang,technical), b=display(BAND,meta.confidence_band,lang,technical);
+    return `<section class="evidence-bar" aria-label="Evidence summary"><div><span>${x.assessment}</span><strong>${esc(a)}</strong></div><div><span>${x.confidence}</span><strong>${esc(meta.confidence_score)}/100 · ${esc(b)}</strong></div><div><span>${x.status}</span><strong>${esc(s)}</strong></div><div><span>${x.updated}</span><strong>${esc(meta.updated_at)}</strong></div></section>`;
+  }
+  function card(d,r){
+    const x=T[r.lang], m=d.meta, cat=categoryLabel(m.category,r.lang), status=display(STATUS,m.status,r.lang,false), band=display(BAND,m.confidence_band,r.lang,false), u=`${BASE}${r.lang}/news/${d.slug}/`;
+    return `<article class="story-card"><div class="story-meta"><a class="category-pill" href="${BASE}${r.lang}/category/${esc(m.category)}/">${esc(cat)}</a><span class="status-pill">${esc(status)}</span><span class="confidence-pill"><strong>${esc(m.confidence_score)}/100</strong>&nbsp;·&nbsp;${esc(band)}</span></div><h2><a href="${u}">${esc(d.title)}</a></h2><p>${esc(d.summary)}</p><a class="text-link" href="${u}">${x.read} →</a></article>`;
+  }
+  async function docs(lang){ return Promise.all(STORIES.map(s=>load(s,'article',lang).then(d=>({slug:s,...d,...titleSummary(d.body)})))); }
   async function home(r){
-    const x=T[r.lang]; const docs=await Promise.all(STORIES.map(s=>load(s,'article',r.lang).then(d=>({slug:s,...d,...titleSummary(d.body)}))));
-    const cards=docs.map(d=>`<article class="story-card"><div class="story-meta"><span>${esc(d.meta.status)}</span><span>${esc(d.meta.confidence_score)}/100 · ${esc(d.meta.confidence_band)}</span></div><h2><a href="${BASE}${r.lang}/news/${d.slug}/">${esc(d.title)}</a></h2><p>${esc(d.summary)}</p><a class="text-link" href="${BASE}${r.lang}/news/${d.slug}/">${x.read} →</a></article>`).join('');
+    const x=T[r.lang], items=await docs(r.lang), cards=items.map(d=>card(d,r)).join('');
     frame(r,`<section class="hero"><p class="eyebrow">VeriNews V0.1 · M4 preview</p><h1>${esc(x.tag)}</h1><p>${esc(x.method)}</p></section><section class="story-list"><h2>${esc(x.latest)}</h2>${cards}</section>`);
+  }
+  async function category(r){
+    const x=T[r.lang], label=categoryLabel(r.category,r.lang), items=(await docs(r.lang)).filter(d=>d.meta.category===r.category), cards=items.map(d=>card(d,r)).join(''), empty=items.length?'':`<p class="empty-state">${esc(x.empty)}</p>`;
+    frame(r,`<section class="category-hero"><p class="eyebrow">${esc(x.tag)}</p><h1>${esc(label)}</h1></section><section class="story-list">${cards}${empty}</section>`,label);
   }
   async function story(r){
     const kind=r.analysis?'analysis':'article', d=await load(r.slug,kind,r.lang), ts=titleSummary(d.body);
     const displayBody=r.analysis?d.body:d.body.replace(/\n##\s+(?:Pełna analiza|Full analysis)\s*\n[\s\S]*$/i,'');
-    let body=evidence(d.meta,r.lang)+`<article class="prose">${markdown(displayBody)}</article>`;
+    let body=evidence(d.meta,r.lang,r.analysis)+`<article class="prose ${r.analysis?'analysis-prose':'reader-prose'}">${markdown(displayBody)}</article>`;
     if(!r.analysis) body+=`<p class="analysis-cta"><a href="${BASE}${r.lang}/news/${r.slug}/analysis/">${T[r.lang].analysis} →</a></p>`;
     frame(r,body,(r.analysis?(r.lang==='pl'?'Analiza: ':'Analysis: '):'')+ts.title);
   }
-  async function main(){ const r=route(); if(r.redirect){ location.replace(BASE+'pl/'); return; } try { await (r.slug?story(r):home(r)); } catch(e){ frame(r,`<section class="hero"><h1>${esc(T[r.lang].error)}</h1><p>${esc(String(e))}</p></section>`,'VeriNews'); } }
+  async function main(){
+    const r=route(); if(r.redirect){ location.replace(BASE+'pl/'); return; }
+    try { if(r.kind==='category') await category(r); else if(r.slug) await story(r); else await home(r); }
+    catch(e){ frame(r,`<section class="hero"><h1>${esc(T[r.lang].error)}</h1><p>${esc(String(e))}</p></section>`,'VeriNews'); }
+  }
   main();
 })();
