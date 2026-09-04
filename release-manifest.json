@@ -1,0 +1,7 @@
+{
+  "manifest_version": 1,
+  "product": "VeriNews",
+  "channel": "preview",
+  "source_repository": "Atomovvy/VeriNews.Dev",
+  "source_commit": "a9780a2f712a8f8692ce7c1b638c035cfa5a682f"
+}
