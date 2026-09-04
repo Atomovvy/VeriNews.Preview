@@ -2,12 +2,19 @@
   'use strict';
 
   const BASE = location.pathname.startsWith('/VeriNews.Preview/') ? '/VeriNews.Preview/' : '/';
-  const SOURCE_COMMIT = '23a29d67a17f5eb4cc5f10e1c130b59f4dd5f040';
+  const SOURCE_COMMIT = 'a9780a2f712a8f8692ce7c1b638c035cfa5a682f';
   const STORIES = [
+    'openai-gpt-6-astra-launch',
     'openai-astra-cyber-controls',
     'israel-gaza-15-point-document',
     'eclipse-perseids-poland',
   ];
+  const STORY_PATHS = {
+    'openai-gpt-6-astra-launch': '2026/09/04',
+    'openai-astra-cyber-controls': '2026/08/10',
+    'israel-gaza-15-point-document': '2026/08/10',
+    'eclipse-perseids-poland': '2026/08/10',
+  };
   const CATEGORIES = [
     {id:'poland',pl:'Polska',en:'Poland'},
     {id:'world',pl:'Świat',en:'World'},
@@ -201,12 +208,16 @@
     return body.replace(/^#\s+.+?(?:\r?\n+|$)/m, '').trimStart();
   }
 
+  function storyPath(slug) {
+    return STORY_PATHS[slug] || '2026/08/10';
+  }
+
   function source(slug, kind, lang) {
-    return `${BASE}content/2026/08/10/${slug}/${kind}.${lang}.md`;
+    return `${BASE}content/${storyPath(slug)}/${slug}/${kind}.${lang}.md`;
   }
 
   function publicationSource(slug) {
-    return `${BASE}content/2026/08/10/${slug}/publication.json`;
+    return `${BASE}content/${storyPath(slug)}/${slug}/publication.json`;
   }
 
   async function load(slug, kind, lang) {
