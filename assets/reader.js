@@ -1,1 +1,0 @@
-(()=>{'use strict';document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{const box=b.closest('[data-gate]');box.querySelector('[data-body]').hidden=false;box.querySelector('[data-notice]').hidden=true;}));})();
