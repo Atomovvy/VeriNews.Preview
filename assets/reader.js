@@ -333,16 +333,6 @@
     });
   }
 
-  function syncPreviewSource() {
-    const source = document.querySelector('meta[name="verinews-source-commit"]')?.content || '';
-    if (!/^[0-9a-f]{40}$/.test(source)) return;
-    document.querySelectorAll('.site-footer p').forEach((node) => {
-      if (/source\s+[0-9a-f]{12}/i.test(node.textContent || '')) {
-        node.textContent = (node.textContent || '').replace(/source\s+[0-9a-f]{12}/i, `source ${source.slice(0, 12)}`);
-      }
-    });
-  }
-
   function mount() {
     const utilities = ensureUtilities();
     if (utilities && !utilities.querySelector('.reader-controls')) {
@@ -363,7 +353,6 @@
     });
 
     updateAll();
-    syncPreviewSource();
   }
 
   if (document.readyState === 'loading') {
