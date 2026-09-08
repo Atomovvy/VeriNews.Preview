@@ -3,7 +3,7 @@
   "product": "VeriNews",
   "channel": "preview",
   "source_repository": "Atomovvy/VeriNews.Dev",
-  "source_commit": "3f52c659e4ee17ea3ffa1c3622e1cdfbaa19da8b",
+  "source_commit": "08fbae469af4fd545833d09689f4383144533f65",
   "preview_moderation": {
     "binding_version": 1,
     "mode": "STANDARD",

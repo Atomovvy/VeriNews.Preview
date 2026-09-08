@@ -93,7 +93,7 @@ button, input { font: inherit; }
 .gate-reveal { margin-top: 10px; min-height: 34px; padding: 5px 10px; border-radius: 7px; font-size: .82rem; font-weight: 750; }
 .gate-reveal:hover { border-color: var(--accent); }
 .reader-gate-page > .restriction-box { margin: 0 0 26px; }
-.reader-title { max-width: 800px; margin: 0 auto 28px; font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.06; letter-spacing: -.04em; }
+.reader-title { max-width: 800px; margin: 0 auto 28px; font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.06; letter-spacing: -.04em; overflow-wrap: anywhere; }
 .reader-gate-page.is-restricted .reader-title { margin-bottom: 18px; }
 .evidence-bar { margin: 8px 0 44px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
 .evidence-bar > div { min-height: 92px; padding: 17px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; border-right: 1px solid var(--line); }
@@ -178,6 +178,7 @@ th { background: var(--accent-soft); }
 }
 
 @media (max-width: 560px) {
+  .site-header { position: static; }
   .header-inner { min-height: 54px; padding: 7px 12px; align-items: center; }
   .header-utilities { max-width: none; width: 100%; margin-left: 0; justify-content: flex-start; }
   .brand { align-self: flex-start; padding-top: 4px; }
