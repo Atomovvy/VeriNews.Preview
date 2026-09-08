@@ -45,9 +45,6 @@
           densityGroup: 'Widok',
           standard: 'Standardowy',
           compact: 'Kompaktowy',
-          confidenceTotal: 'Łączny wynik',
-          confidenceLevel: 'Poziom wiarygodności',
-          assessment: 'Ocena',
         }
       : {
           themeGroup: 'Theme',
@@ -56,9 +53,6 @@
           densityGroup: 'View',
           standard: 'Standard',
           compact: 'Compact',
-          confidenceTotal: 'Total score',
-          confidenceLevel: 'Confidence level',
-          assessment: 'Assessment',
         };
   }
 
@@ -153,12 +147,32 @@
     const text = heading.trim().toLowerCase();
     if (/^claim[-\s]?\d+/.test(text) || /^twierdzenie\b/.test(text)) return 'claim';
     if (/(dlaczego taka ocena|ocena całości|overall assessment|why this assessment)/.test(text)) return 'assessment';
+    if (/(składowe pewności|confidence components)/.test(text)) return 'confidence';
     if (/(potwierdzone|confirmed)/.test(text)) return 'confirmed';
     if (/(z zastrzeżeniami|qualified|qualifying|kontrdowody|counter-evidence)/.test(text)) return 'qualified';
     if (/(nieznane|unknown|niepewność|uncertainty)/.test(text)) return 'unknown';
     if (/(źródła|sources|niezależne potwierdzenia|independent corroboration)/.test(text)) return 'sources';
     if (/(historia|history|revision)/.test(text)) return 'history';
     return 'section';
+  }
+
+  function styleStoryConfidenceGrid(wrap) {
+    wrap.classList.add('story-confidence-breakdown');
+    const table = wrap.querySelector('table');
+    if (table) table.style.tableLayout = 'auto';
+
+    table?.querySelectorAll('tbody tr').forEach((row) => {
+      row.querySelectorAll('td').forEach((cell, index) => {
+        if (index % 2 === 1) {
+          cell.style.width = '4rem';
+          cell.style.textAlign = 'right';
+          cell.style.fontWeight = '800';
+          cell.style.fontVariantNumeric = 'tabular-nums';
+        } else {
+          cell.style.width = 'auto';
+        }
+      });
+    });
   }
 
   function markConfidenceBreakdowns(prose) {
@@ -171,70 +185,16 @@
       'claim_scope_precision',
     ];
     prose.querySelectorAll('.table-wrap').forEach((wrap) => {
+      const section = wrap.closest('.analysis-section');
+      const storyGrid = section?.classList.contains('analysis-section-confidence') || false;
       const text = (wrap.textContent || '').toLowerCase();
       const matches = componentNames.filter((name) => text.includes(name)).length;
-      if (matches >= 3) {
+      if (storyGrid || matches >= 3) {
         wrap.classList.add('confidence-breakdown');
-        wrap.closest('.analysis-section')?.classList.add('has-confidence-breakdown');
+        section?.classList.add('has-confidence-breakdown');
+        if (storyGrid) styleStoryConfidenceGrid(wrap);
       }
     });
-  }
-
-  function confidenceEvidenceSummary() {
-    const rows = Array.from(document.querySelectorAll('.evidence-bar > div'));
-    const assessment = rows[0]?.querySelector('strong')?.textContent?.trim() || '';
-    const confidence = rows[1]?.querySelector('strong')?.textContent?.trim() || '';
-    const match = confidence.match(/^(\d+)\s*\/\s*100\s*[·—-]\s*(.+)$/);
-    return {
-      assessment,
-      score: match ? `${match[1]} / 100` : confidence,
-      band: match ? match[2].trim() : '',
-    };
-  }
-
-  function sectionHeading(section) {
-    if (!section) return '';
-    const heading = Array.from(section.children).find((node) => node.tagName === 'H2');
-    return (heading?.textContent || '').trim().toLowerCase();
-  }
-
-  function isStoryConfidenceBreakdown(wrap) {
-    const section = wrap.closest('.analysis-section');
-    if (!section) return false;
-    if (section.classList.contains('analysis-section-assessment')) return true;
-    return /(składowe pewności|confidence components|confidence breakdown|breakdown story confidence)/.test(sectionHeading(section));
-  }
-
-  function addStoryConfidenceSummary(prose) {
-    const wrap = Array.from(prose.querySelectorAll('.confidence-breakdown')).find(isStoryConfidenceBreakdown);
-    const table = wrap?.querySelector('table');
-    const body = table?.querySelector('tbody');
-    if (!table || !body || body.querySelector('[data-hybrid-v2-confidence-summary]')) return;
-
-    const values = confidenceEvidenceSummary();
-    if (!values.assessment || !values.score) return;
-
-    const l = labels();
-    const existingText = (table.textContent || '').toLowerCase();
-    const rows = [];
-    if (!/(^|\s)(razem|total)(\s|$)/.test(existingText)) {
-      rows.push([l.confidenceTotal, values.score]);
-    }
-    rows.push([l.confidenceLevel, values.band || values.score]);
-    rows.push([l.assessment, values.assessment]);
-
-    for (const [label, value] of rows) {
-      const row = document.createElement('tr');
-      row.dataset.hybridV2ConfidenceSummary = 'true';
-      const labelCell = document.createElement('td');
-      labelCell.textContent = label;
-      const valueCell = document.createElement('td');
-      const strong = document.createElement('strong');
-      strong.textContent = value;
-      valueCell.appendChild(strong);
-      row.append(labelCell, valueCell);
-      body.appendChild(row);
-    }
   }
 
   function enhanceAnalysis() {
@@ -253,7 +213,6 @@
       }
 
       markConfidenceBreakdowns(prose);
-      addStoryConfidenceSummary(prose);
     });
   }
 

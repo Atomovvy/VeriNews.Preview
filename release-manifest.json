@@ -3,5 +3,19 @@
   "product": "VeriNews",
   "channel": "preview",
   "source_repository": "Atomovvy/VeriNews.Dev",
-  "source_commit": "d2ab2507defe95ca8378825dbb0b0cedce975a5c"
+  "source_commit": "3f52c659e4ee17ea3ffa1c3622e1cdfbaa19da8b",
+  "preview_moderation": {
+    "binding_version": 1,
+    "mode": "STANDARD",
+    "unmoderated_story_count": 0,
+    "unmoderated_story_ids_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "source_materialization": {
+    "binding_version": 1,
+    "mode": "DIRECT_CLEAN",
+    "overlay_story_count": 0,
+    "overlay_story_paths_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "overlay_file_count": 0,
+    "overlay_files_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  }
 }
